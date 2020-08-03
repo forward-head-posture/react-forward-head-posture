@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import to from "await-to-js"
 
 export default function(
-  modelURL = "https://yoyota.gitlab.io/forward-head-posture-model/v0.1.1/model.json"
+  modelURL = "https://yoyota.gitlab.io/forward-head-posture-model/v0.1.2/model.json"
 ) {
   const [net, setNet] = useState(null)
   useEffect(() => {

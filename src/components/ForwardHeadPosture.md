@@ -11,7 +11,7 @@ const [score, setScore] = useState(0)
   <ForwardHeadPosture
     style={{ width: "100%" }}
     onEstimate={setScore}
-    frameRate={30}
+    frameRate={15}
   />
 </>
 ```

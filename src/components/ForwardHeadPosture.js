@@ -14,7 +14,7 @@ export default function ForwardHeadPosture({
   width,
   height
 }) {
-  const canvasRef = useRef()
+  const [ctx, setCtx] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const onEstimateRef = useRef()
   onEstimateRef.current = onEstimate
@@ -28,31 +28,53 @@ export default function ForwardHeadPosture({
   })
 
   useEffect(() => {
-    if (!net || !image) return () => {}
+    if (!net || !image || !ctx) return () => {}
     if ([net, image].some(elem => elem instanceof Error)) return () => {}
 
-    const ctx = canvasRef.current.getContext("2d")
-    const intervalID = setInterval(async () => {
+    let intervalId
+    let requestId
+    function cleanUp() {
+      clearInterval(intervalId)
+      cancelAnimationFrame(requestId)
+    }
+
+    async function estimate() {
       try {
         ctx.drawImage(image, 0, 0, width, height)
-        onEstimateRef.current(await net.estimate(image))
+        const score = await net.estimate(image)
+        onEstimateRef.current(score)
       } catch (err) {
-        clearInterval(intervalID)
+        cleanUp()
         setErrorMessage(err.message)
       }
-    }, Math.round(1000 / frameRate))
+    }
 
-    return () => clearInterval(intervalID)
-  }, [frameRate, height, image, net, width])
+    if (frameRate) {
+      intervalId = setInterval(estimate, Math.round(1000 / frameRate))
+      return cleanUp
+    }
+
+    function animate() {
+      estimate()
+      requestId = requestAnimationFrame(animate)
+    }
+    requestId = requestAnimationFrame(animate)
+
+    return cleanUp
+  }, [ctx, frameRate, height, image, net, width])
   return (
     <>
       <Loading name="model" target={net} />
       <Loading name="input" target={image} />
       <font color="red">{errorMessage}</font>
       <canvas
-        ref={canvasRef}
         style={style}
         className={className}
+        ref={c => {
+          if (c) {
+            setCtx(c.getContext("2d"))
+          }
+        }}
         width={width}
         height={height}
       />
