@@ -1,6 +1,6 @@
 ## Documentation
 
-https://react-forward-head-posture.yoyota.dev
+https://forward-head-posture.github.io/react-forward-head-posture/
 
 ## Installation
 
