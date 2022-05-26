@@ -4,7 +4,8 @@ module.exports = {
     "prettier/react",
     "plugin:jest/recommended",
     "plugin:promise/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:markdown/recommended",
   ],
   env: {
     jest: true,
