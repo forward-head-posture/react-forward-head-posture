@@ -4,7 +4,7 @@ import Loading from "./Loading"
 import useInputImage from "../hooks/useInputImage"
 import useNet from "../hooks/useLoadNet"
 
-export default function ForwardHeadPosture({
+function ForwardHeadPosture({
   style,
   className,
   facingMode,
@@ -40,7 +40,8 @@ export default function ForwardHeadPosture({
 
     async function estimate() {
       try {
-        ctx.drawImage(image, 0, 0, width, height)
+        ctx.scale(-1, 1)
+        ctx.drawImage(image, 0, 0, width * -1, height)
         const score = await net.estimate(image)
         onEstimateRef.current(score)
       } catch (err) {
@@ -122,3 +123,5 @@ ForwardHeadPosture.defaultProps = {
   width: 600,
   height: 500
 }
+
+export default ForwardHeadPosture

@@ -1,3 +1,4 @@
+const path = require("path")
 const { version } = require("./package")
 
 module.exports = {
@@ -5,7 +6,28 @@ module.exports = {
   title: "forward head posture react",
   require: ["regenerator-runtime/runtime"],
   components: ["src/components/ForwardHeadPosture.js"],
+  moduleAliases: {
+    "react-forward-head-posture": path.resolve(__dirname, "src")
+  },
   styleguideDir: "dist-docs",
+  pagePerSection: true,
+  sections: [
+    {
+      name: "ForwardHeadPosture",
+      content: "./src/components/ForwardHeadPosture.md",
+      sectionDepth: 0
+    },
+    {
+      name: "Examples",
+      sections: [
+        {
+          name: "Browser notification",
+          content: "./docs/BrowserNotification.md"
+        }
+      ],
+      sectionDepth: 0
+    }
+  ],
   webpackConfig: {
     module: {
       rules: [
@@ -23,7 +45,7 @@ module.exports = {
         {
           rel: "stylesheet",
           href:
-            "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         }
       ]
     }

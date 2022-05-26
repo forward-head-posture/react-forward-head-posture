@@ -3,6 +3,7 @@ If your device dose not have camera, you will see error message like
 
 ```jsx
 import React, { useState } from "react"
+import ForwardHeadPosture from "react-forward-head-posture"
 
 const [score, setScore] = useState(0)
 
