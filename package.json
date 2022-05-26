@@ -29,6 +29,7 @@
     "acorn": "^7.3.1",
     "await-to-js": "^2.1.1",
     "regenerator-runtime": "^0.13.5",
+    "seedrandom": "^2.4.4",
     "use-user-media": "^0.1.8"
   },
   "peerDependencies": {
