@@ -29,11 +29,11 @@
     "acorn": "^7.3.1",
     "await-to-js": "^2.1.1",
     "regenerator-runtime": "^0.13.5",
-    "use-user-media": "^0.1.7"
+    "use-user-media": "^0.1.8"
   },
   "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
@@ -55,8 +55,8 @@
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-styleguidist": "^10.6.2",
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^4.4.0",
