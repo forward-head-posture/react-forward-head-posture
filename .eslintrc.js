@@ -13,6 +13,8 @@ module.exports = {
   },
   plugins: ["jest", "markdown", "promise", "prettier", "react", "react-hooks"],
   rules: {
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "import/no-extraneous-dependencies": "off",
     "no-alert": "error",
     "no-console": "error",
