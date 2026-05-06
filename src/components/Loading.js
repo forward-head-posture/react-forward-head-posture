@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function({ name, target }) {
+function Loading({ name, target }) {
   if (!target) {
     return <p>{`loading ${name} ...`}</p>
   }
@@ -14,3 +14,5 @@ export default function({ name, target }) {
   }
   return <></>
 }
+
+export default Loading
