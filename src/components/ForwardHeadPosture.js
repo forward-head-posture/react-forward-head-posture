@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import Loading from "./Loading"
 import useInputImage from "../hooks/useInputImage"
-import useNet from "../hooks/useLoadNet"
+import useLoadNet from "../hooks/useLoadNet"
+import useEstimationLoop from "../hooks/useEstimationLoop"
 
 function ForwardHeadPosture({
   style,
@@ -16,9 +17,7 @@ function ForwardHeadPosture({
 }) {
   const [ctx, setCtx] = useState()
   const [errorMessage, setErrorMessage] = useState()
-  const onEstimateRef = useRef()
-  onEstimateRef.current = onEstimate
-  const net = useNet()
+  const net = useLoadNet()
   const image = useInputImage({
     input,
     width,
@@ -27,42 +26,16 @@ function ForwardHeadPosture({
     frameRate
   })
 
-  useEffect(() => {
-    if (!net || !image || !ctx) return () => {}
-    if ([net, image].some(elem => elem instanceof Error)) return () => {}
-
-    let intervalId
-    let requestId
-    function cleanUp() {
-      clearInterval(intervalId)
-      cancelAnimationFrame(requestId)
-    }
-
-    async function estimate() {
-      try {
-        ctx.scale(-1, 1)
-        ctx.drawImage(image, 0, 0, width * -1, height)
-        const score = await net.estimate(image)
-        onEstimateRef.current(score)
-      } catch (err) {
-        cleanUp()
-        setErrorMessage(err.message)
-      }
-    }
-
-    if (frameRate) {
-      intervalId = setInterval(estimate, Math.round(1000 / frameRate))
-      return cleanUp
-    }
-
-    function animate() {
-      estimate()
-      requestId = requestAnimationFrame(animate)
-    }
-    requestId = requestAnimationFrame(animate)
-
-    return cleanUp
-  }, [ctx, frameRate, height, image, net, width])
+  useEstimationLoop({
+    net,
+    image,
+    ctx,
+    width,
+    height,
+    frameRate,
+    onEstimate,
+    onError: setErrorMessage
+  })
   return (
     <>
       <Loading name="model" target={net} />
